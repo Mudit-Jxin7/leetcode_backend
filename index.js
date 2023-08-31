@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const userRouter = require('./routes/user');
-const adminRouter = require('./routes/admin');
+const userRouter = require('./routes/userRoute');
+const adminRouter = require('./routes/adminRoute');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 

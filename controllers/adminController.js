@@ -4,10 +4,9 @@ const dotenv = require('dotenv');
 const bcrypt = require('bcrypt');
 const Admin = require('../db/adminSchema');
 
-const router = express.Router();
 dotenv.config();
 
-router.post('/register', async (req, res) => {
+const adminRegister = async (req, res) => {
     const { email, password } = req.body;
 
     try {
@@ -26,9 +25,9 @@ router.post('/register', async (req, res) => {
         console.log(error);
         res.status(500).json('Error registering user');
     }
-});
+};
 
-router.post('/login', async (req, res) => {
+const adminLogin = async (req, res) => {
     const { email, password } = req.body;
 
     try {
@@ -44,6 +43,9 @@ router.post('/login', async (req, res) => {
     } catch (error) {
         res.status(500).json('Error logging in');
     }
-});
+};
 
-module.exports = router;
+module.exports = {
+    adminRegister,
+    adminLogin
+};
