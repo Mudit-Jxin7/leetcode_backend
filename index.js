@@ -2,13 +2,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const userRouter = require('./routes/userRoute');
 const adminRouter = require('./routes/adminRoute');
+const courseRouter = require('./routes/courseRoute');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 
 dotenv.config();
+const PORT = 4000;
 
 const app = express();
-const PORT = 4000;
 
 app.use(bodyParser.json());
 
@@ -19,6 +20,7 @@ mongoose.connect(process.env.MONGO_URL, {
 
 app.use('/user', userRouter);
 app.use('/admin', adminRouter);
+app.use('/course', courseRouter);
 
 app.listen(PORT, () => {
     console.log('Listening on port', PORT);
