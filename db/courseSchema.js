@@ -15,7 +15,13 @@ const courseSchema = new mongoose.Schema({
     prerequisite: [String],
     enrollments: Number,
     createdAt: Date,
+    reviews: [{
+        user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        text: String,
+        createdAt: Date,
+    }]
 });
+
 
 const Course = mongoose.model('Course', courseSchema);
 

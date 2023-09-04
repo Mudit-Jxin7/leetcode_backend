@@ -70,8 +70,6 @@ const getAllCourses = async (req, res) => {
 const getCourse = async (req, res) => {
     try {
         const courseId = req.params.courseId;
-        console.log(courseId);
-
         const course = await Course.findById(courseId);
 
         if (!course) {
