@@ -5,6 +5,8 @@ const adminRouter = require('./routes/adminRoute');
 const courseRouter = require('./routes/courseRoute');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
+const cors = require('cors');
+
 
 dotenv.config();
 const PORT = 4000;
@@ -12,6 +14,7 @@ const PORT = 4000;
 const app = express();
 
 app.use(bodyParser.json());
+app.use(cors())
 
 mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
