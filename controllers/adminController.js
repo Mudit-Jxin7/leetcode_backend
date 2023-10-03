@@ -35,7 +35,7 @@ const adminLogin = async (req, res) => {
         const admin = await Admin.findOne({ email });
 
         if (admin && await bcrypt.compare(password, admin.password)) {
-            const token = jwt.sign({ email, role: 'admin' }, process.env.SECRET);
+            const token = jwt.sign({ id: admin._id }, process.env.SECRET, { expiresIn: '1h' });
             res.json({ message: 'Logged in successfully', token });
         } else {
             res.status(403).json('Wrong credentials');
@@ -45,7 +45,18 @@ const adminLogin = async (req, res) => {
     }
 };
 
+const getAdmin = async (req, res) => {
+    const admin = await Admin.findOne({ _id: req.userId });
+    if (admin) {
+        res.json({ email: admin.email });
+    } else {
+        res.status(403).json({ message: 'Admin not logged in' });
+    }
+
+}
+
 module.exports = {
     adminRegister,
-    adminLogin
+    adminLogin,
+    getAdmin
 };

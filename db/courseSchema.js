@@ -11,8 +11,8 @@ const courseSchema = new mongoose.Schema({
     duration: Number,
     Language: String,
     videoLink: String,
-    courseContent: [String],
-    prerequisite: [String],
+    courseContent: String,
+    prerequisite: String,
     enrollments: Number,
     createdAt: Date,
     reviews: [{
