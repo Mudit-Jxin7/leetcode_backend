@@ -13,11 +13,10 @@ const createCourse = async (req, res) => {
             rating,
             instructor,
             duration,
-            Language,
+            language,
             videoLink,
             courseContent,
             prerequisite,
-            enrollments,
         } = req.body;
 
         const newCourse = new Course({
@@ -29,11 +28,10 @@ const createCourse = async (req, res) => {
             rating,
             instructor,
             duration,
-            Language,
+            language,
             videoLink,
             courseContent,
             prerequisite,
-            enrollments,
             createdAt: new Date(),
         });
 
@@ -96,7 +94,7 @@ const updateCourse = async (req, res) => {
         const updateData = req.body;
 
         const updatedCourse = await Course.findByIdAndUpdate(courseId, updateData, {
-            new: true, // Return the updated course after the update
+            new: true,
         });
 
         if (!updatedCourse) {

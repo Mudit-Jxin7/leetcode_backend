@@ -52,7 +52,6 @@ const getAdmin = async (req, res) => {
     } else {
         res.status(403).json({ message: 'Admin not logged in' });
     }
-
 }
 
 module.exports = {
