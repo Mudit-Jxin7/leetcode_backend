@@ -4,6 +4,8 @@
 
 This repository contains a backend for course selling application built with Express.js and MongoDB and written in typescript .
 
+[FrontEnd](https://github.com/Mudit-Jxin7/course_frontend)
+
 ## Prerequisites
 
 Before you start using this application, ensure you have the following installed on your system:
