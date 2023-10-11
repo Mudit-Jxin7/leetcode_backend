@@ -1,8 +1,8 @@
-# TypeScript Backend Application Readme
+# Course Selling Application - Backend
 
 ## Description
 
-This repository contains a TypeScript backend application built with Express.js and MongoDB. It provides a starting point for developing server-side applications in TypeScript. The application uses a sample `.env.example` file to store environment variables, and you will need to configure these variables to run the application successfully.
+This repository contains a backend for course selling application built with Express.js and MongoDB and written in typescript .
 
 ## Prerequisites
 
@@ -11,19 +11,20 @@ Before you start using this application, ensure you have the following installed
 - Node.js (v14 or higher)
 - npm (Node Package Manager)
 - MongoDB
+- Typescript
 
 ## Installation
 
 1. Clone the repository to your local machine:
 
    ```bash
-   git clone <repository_url>
+   git clone https://github.com/Mudit-Jxin7/course_backend.git
    ```
 
 2. Navigate to the project directory:
 
    ```bash
-   cd <project_directory>
+   cd course_backend
    ```
 
 3. Install project dependencies:
@@ -46,20 +47,14 @@ Before you start using this application, ensure you have the following installed
 To run the application, execute the following command:
 
 ```bash
-npm start
+tsc
+```
+
+```bash
+nodemon dist/index.js
 ```
 
 The application will start, and you can access it at `http://localhost:4000` (or the port you specified in your `.env` file).
-
-## Development
-
-If you want to make changes to the application or develop new features, you can run the application in development mode with the following command:
-
-```bash
-npm run dev
-```
-
-This command uses [Nodemon](https://nodemon.io/) to automatically restart the server whenever you make changes to the source code.
 
 ## API Endpoints
 
@@ -75,7 +70,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Author
 
-- [Your Name](https://github.com/your-github-profile)
+- [Mudit Jain](https://github.com/Mudit-Jxin7)
 
 ## Acknowledgments
 
