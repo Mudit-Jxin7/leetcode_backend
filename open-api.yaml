@@ -1,0 +1,338 @@
+openapi: 3.0.0
+info:
+  title: Course Selling API
+  version: 1.0.0
+  description: An API for managing courses, users, and admin in a Academex.
+paths:
+ /user/register:
+  post:
+    summary: Register a new user
+    operationId: userRegister
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserRegistration'
+    responses:
+      '201':
+        description: User successfully registered
+      '411':
+        description: Parsing Error
+      '403':
+        description: User already exists
+      '500':
+        description: Internal server error
+  /user/login:
+    post:
+      summary: User login
+      operationId: userLogin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+      responses:
+        '201':
+          description: User successfully logged in
+        '403':
+          description: Wrong Credentials
+        '411':
+          description: Parsing Error
+        '500':
+          description: Internal server error
+  /course/createcourse:
+    post:
+      summary: Create a new course
+      operationId: createCourse
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Course'
+      responses:
+        '201':
+          description: Course successfully created
+        '500':
+          description: Bad request
+      security:
+        - JWT: []
+  /course/getallcourses:
+    get:
+      summary: Get all courses
+      operationId: getAllCourses
+      responses:
+        '201':
+          description: List of all courses
+        '500':
+          description: Bad request
+  /course/getcourse/{courseId}:
+    get:
+      summary: Get a specific course
+      operationId: getCourse
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Course details
+        '404':
+          description: Course not found
+        '500':
+          description: Bad request
+  /course/updatecourse/{courseId}:
+    put:
+      summary: Update a course
+      operationId: updateCourse
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Course'
+      responses:
+        '200':
+          description: Course successfully updated
+        '404':
+          description: Course not found
+        '500':
+          description: Bad request 
+      security:
+        - JWT: []
+  /course/deletecourse/{courseId}:
+    delete:
+      summary: Delete a course
+      operationId: deleteCourse
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Course successfully deleted
+        '500':
+          description: Bad request  
+      security:
+        - JWT: []
+  /course/review/{courseId}:
+    post:
+      summary: Post a review for a course
+      operationId: postReview
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Review'
+      responses:
+        '201':
+          description: Review successfully posted
+        '500':
+          description: Bad request
+      security:
+        - JWT: []
+  /course/getreview/{courseId}:
+    get:
+      summary: Get reviews for a course
+      operationId: getReview
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of course reviews
+        '500':
+          description: Bad request
+      security:
+        - JWT: []
+  /admin/register:
+    post:
+      summary: Register a new admin
+      operationId: adminRegister
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminRegistration'
+      responses:
+        '201':
+          description: Admin successfully registered
+        '400':
+          description: Bad request
+  /admin/login:
+    post:
+      summary: Admin login
+      operationId: adminLogin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminLogin'
+      responses:
+        '200':
+          description: Admin successfully logged in
+        '401':
+          description: Unauthorized
+  /admin/me:
+    get:
+      summary: Get admin profile
+      operationId: getAdmin
+      responses:
+        '200':
+          description: Admin profile
+        '403':
+          description: Unauthorized
+      security:
+        - JWT: []
+
+components:
+  schemas:
+    UserRegistration:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the user.
+        email:
+          type: string
+          format: email
+          description: The email address of the user.
+        password:
+          type: string
+          description: The user's password (hashed and securely stored).
+
+    UserLogin:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: The email address of the user.
+        password:
+          type: string
+          description: The user's password.
+
+    Course:
+      type: object
+      properties:
+        title:
+          type: string
+          description: The title of the course.
+        description:
+          type: string
+          description: A brief description of the course.
+        price:
+          type: number
+          format: float
+          description: The price of the course.
+        imageLink:
+          type: string
+          description: Link to the course's image.
+        published:
+          type: boolean
+          description: Indicates if the course is published.
+        rating:
+          type: number
+          format: float
+          description: The course's rating.
+        instructor:
+          type: string
+          description: The name of the course instructor.
+        duration:
+          type: number
+          format: float
+          description: The duration of the course.
+        language:
+          type: string
+          description: The language of the course.
+        videoLink:
+          type: string
+          description: Link to the course's video content.
+        courseContent:
+          type: string
+          description: Description of the course content.
+        prerequisite:
+          type: string
+          description: Prerequisite for the course.
+        enrollments:
+          type: number
+          description: The number of course enrollments.
+        createdAt:
+          type: string
+          format: date-time
+          description: The timestamp when the course was created.
+        reviews:
+          type: array
+          items:
+            type: object
+            properties:
+              user:
+                type: string
+                description: ID of the user who posted the review.
+              text:
+                type: string
+                description: The text content of the review.
+              createdAt:
+                type: string
+                format: date-time
+                description: The timestamp when the review was created.        
+
+    Review:
+      type: object
+      properties:
+        user:
+          type: string
+          description: The user who posted the review.
+        text:
+          type: string
+          description: The text content of the review.
+        createdAt:
+          type: string
+          format: date-time
+          description: The timestamp when the review was created.
+        
+
+    AdminRegistration:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: The email address of the admin.
+        password:
+          type: string
+          description: The admin's password (hashed and securely stored).
+
+    AdminLogin:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: The email address of the admin.
+        password:
+          type: string
+          description: The admin's password.
+
+securitySchemes:
+  JWT:
+    type: http
+    scheme: bearer
+    bearerFormat: JWT

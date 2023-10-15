@@ -53,7 +53,7 @@ export const getAllCourses = async (req: Request, res: Response) => {
   try {
     const courses = await Course.find();
 
-    res.status(200).json({
+    res.status(201).json({
       message: "All courses retrieved successfully",
       courses: courses,
     });
@@ -119,7 +119,7 @@ export const deleteCourse = async (req: Request, res: Response) => {
   try {
     const courseId = req.params.courseId;
     await Course.findByIdAndRemove(courseId);
-    res.status(200).send("Course deleted successfully");
+    res.status(204).send("Course deleted successfully");
   } catch (err: any) {
     console.error(err);
     res.status(500).send("Error deleting course");

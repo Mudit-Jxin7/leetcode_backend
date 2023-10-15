@@ -34,7 +34,7 @@ export const userRegister = async (req: Request, res: Response) => {
       const newUser = new User({ name, email, password: hashedPassword });
       await newUser.save();
 
-      res.status(200).json({ email });
+      res.status(201).json({ email });
     } catch (error) {
       console.log(error);
       res.status(500).json("Error registering user");
@@ -68,7 +68,7 @@ export const userLogin = async (req: Request, res: Response) => {
         }
 
         const token = jwt.sign({ email, role: "user" }, secret);
-        res.json({ message: "Logged in successfully", token });
+        res.status(201).json({ message: "Logged in successfully", token });
       } else {
         res.status(403).json("Wrong credentials");
       }
