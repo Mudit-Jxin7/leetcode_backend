@@ -60,7 +60,7 @@ The application will start, and you can access it at `http://localhost:4000` (or
 
 ## API Endpoints
 
-The application provides various API endpoints for interacting with the data stored in the MongoDB database. You can find the routes and their descriptions in the source code.
+The application provides various API endpoints for interacting with the data stored in the MongoDB database. You can find the routes and their descriptions in the source code. Additionally, you can review the OpenAPI Specification for detailed API documentation.
 
 ## Deployment
 
