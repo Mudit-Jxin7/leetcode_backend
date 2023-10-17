@@ -11,6 +11,11 @@ const authInput = z.object({
   name: z.string().min(1).max(20),
 });
 
+const authUser = z.object({
+  email: z.string().min(1).max(50),
+  password: z.string().min(4).max(20),
+});
+
 dotenv.config();
 
 export const userRegister = async (req: Request, res: Response) => {
@@ -43,7 +48,7 @@ export const userRegister = async (req: Request, res: Response) => {
 };
 
 export const userLogin = async (req: Request, res: Response) => {
-  const parsedInput = authInput.safeParse(req.body);
+  const parsedInput = authUser.safeParse(req.body);
   if (!parsedInput.success) {
     res.status(411).json({
       error: "There was an error while parsing the input",
@@ -51,7 +56,6 @@ export const userLogin = async (req: Request, res: Response) => {
   } else {
     const email = parsedInput.data.email;
     const password = parsedInput.data.password;
-
     try {
       const user = await User.findOne({ email });
 
