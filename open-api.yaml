@@ -40,6 +40,17 @@ paths:
           description: Parsing Error
         '500':
           description: Internal server error
+   /user/me:
+    get:
+      summary: Get user profile
+      operationId: getUser
+      responses:
+        '200':
+          description: user profile
+        '403':
+          description: Unauthorized
+      security:
+        - JWT: []
   /course/createcourse:
     post:
       summary: Create a new course
