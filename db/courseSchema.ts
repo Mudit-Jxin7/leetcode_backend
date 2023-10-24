@@ -11,6 +11,7 @@ const courseSchema = new mongoose.Schema({
   duration: mongoose.Schema.Types.Decimal128,
   language: String,
   videoLink: String,
+  tag: String,
   courseContent: String,
   prerequisite: String,
   enrollments: Number,

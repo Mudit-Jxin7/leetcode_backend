@@ -15,6 +15,7 @@ export const createCourse = async (req: Request, res: Response) => {
       duration,
       language,
       videoLink,
+      tag,
       courseContent,
       prerequisite,
     } = req.body;
@@ -30,6 +31,7 @@ export const createCourse = async (req: Request, res: Response) => {
       duration,
       language,
       videoLink,
+      tag,
       courseContent,
       prerequisite,
       createdAt: new Date(),
