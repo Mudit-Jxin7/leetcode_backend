@@ -18,6 +18,6 @@ router.route("/updatecourse/:courseId").put(updateCourse);
 router.route("/deletecourse/:courseId").delete(deleteCourse);
 
 router.route("/review/:courseId").post(authenticateJwt, postReview);
-router.route("/getreview/:courseId").get(authenticateJwt, getReview);
+router.route("/getreview/:courseId").get(getReview);
 
 export default router;

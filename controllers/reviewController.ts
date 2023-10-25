@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import Course from "../db/courseSchema";
+import User from "../db/userSchema";
 
 export const postReview = async (req: Request, res: Response) => {
   try {
@@ -9,7 +10,7 @@ export const postReview = async (req: Request, res: Response) => {
     }
 
     const review = {
-      user: req.user.user,
+      user: req.userId,
       text: req.body.text,
       createdAt: new Date(),
     };
@@ -33,7 +34,20 @@ export const getReview = async (req: Request, res: Response) => {
 
     const reviews = course.reviews;
 
-    res.status(200).json({ reviews });
+    const reviewsWithUserNames = await Promise.all(
+      reviews.map(async (review) => {
+        const user = await User.findById(review.user);
+        if (user) {
+          return {
+            ...review._doc,
+            user: user.name,
+          };
+        }
+        return review;
+      })
+    );
+
+    res.status(200).json({ reviews: reviewsWithUserNames });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
