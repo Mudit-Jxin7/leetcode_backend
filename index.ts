@@ -10,6 +10,14 @@ import cors from "cors";
 dotenv.config();
 const PORT = 4000;
 
+declare global {
+  namespace Express {
+    interface Request {
+      userId: string | undefined;
+    }
+  }
+}
+
 const app = express();
 
 app.use(bodyParser.json());

@@ -4,7 +4,8 @@ import { Request, Response, NextFunction } from "express";
 
 dotenv.config();
 
-interface CustomRequest extends Request {
+//@ts-ignore
+export interface CustomRequest extends Request {
   userId?: string;
   user?: JwtPayload;
 }
@@ -28,7 +29,7 @@ export const authenticateJwt = (
         return res.sendStatus(403);
       }
 
-      if (!user) {
+      if (!user || typeof user === "string") {
         return res.sendStatus(403);
       }
 

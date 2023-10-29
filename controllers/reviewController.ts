@@ -1,6 +1,13 @@
 import express, { Request, Response } from "express";
 import Course from "../db/courseSchema";
 import User from "../db/userSchema";
+import mongoose from "mongoose";
+
+interface Review {
+  user: mongoose.Types.ObjectId | undefined;
+  text: any;
+  createdAt: Date;
+}
 
 export const postReview = async (req: Request, res: Response) => {
   try {
@@ -9,8 +16,8 @@ export const postReview = async (req: Request, res: Response) => {
       return res.status(404).json({ message: "Course not found" });
     }
 
-    const review = {
-      user: req.userId,
+    const review: Review = {
+      user: new mongoose.Types.ObjectId(req.userId),
       text: req.body.text,
       createdAt: new Date(),
     };
@@ -39,6 +46,7 @@ export const getReview = async (req: Request, res: Response) => {
         const user = await User.findById(review.user);
         if (user) {
           return {
+            //@ts-ignore
             ...review._doc,
             user: user.name,
           };
