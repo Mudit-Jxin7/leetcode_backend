@@ -212,6 +212,59 @@ paths:
           description: Unauthorized
       security:
         - JWT: []
+  /makePayment:
+    post:
+      summary: Make a payment for a course
+      operationId: Make Payment
+      responses:
+        200:
+          description: Successful payment.
+          content:
+            application/json:
+              example:
+                id: session_id
+        403:
+          description: Payment error.
+          content:
+            application/json:
+              example:
+                message: Error message
+  /getAllPaidCourses:
+    get:
+      summary: Get all paid courses for a user
+      operationId: getAllPaidCourses
+      responses:
+        200:
+          description: Successful retrieval of paid courses.
+          content:
+            application/json:
+              example:
+                courses:
+                  - course1
+                  - course2
+        404:
+          description: User not found.
+          content:
+            application/json:
+              example:
+                message: User not found
+  /hasUserPurchase/{courseId}:
+    get:
+      summary: Check if a user has purchased a course
+      operationId: hasUserPurchase
+      responses:
+        200:
+          description: Course purchase status.
+          content:
+            application/json:
+              example:
+                hasPurchased: true
+        404:
+          description: User or course not found.
+          content:
+            application/json:
+              example:
+                error: User not found
 
 components:
   schemas:
@@ -341,6 +394,30 @@ components:
         password:
           type: string
           description: The admin's password.
+
+    MakePayment:
+      type: array
+      properties:
+        title:
+          type: String
+          description: The title of the course.
+        price:
+          type: Number
+          description: The price of the course.
+
+    GetAllPaidCourses:
+      type: object
+      properties:
+        courses:
+          type: Array
+          items: Each element in the array represents a Course object.
+
+    HasUserPurchase:
+      type: object
+      properties:
+        hasasPurchased:
+          type: Boolean
+          description: Indicates whether the user has purchased the specified course.
 
 securitySchemes:
   JWT:
