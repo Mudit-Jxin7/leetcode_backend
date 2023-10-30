@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import User from "../db/userSchema";
 import Course from "../db/courseSchema";
+import mongoose from "mongoose";
 const stripe = require("stripe")(
   "sk_test_51O59p6SB2vD416D3TieBVsg9SSwLwUbdO7gcNKqOfdzj6MpnJcfOgtR01jRjsm5rvtMXOF27ufqmXgbjIeCajiyx00iiIJL3We"
 );
@@ -61,5 +62,26 @@ export const getAllPaidCourses = async (req: Request, res: Response) => {
     }
   } catch (err) {
     res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const hasUserPurchase = async (req: Request, res: Response) => {
+  const user = await User.findOne({ _id: req.userId });
+  const courseId = new mongoose.Types.ObjectId(req.params.courseId);
+  const id = req.params.courseId;
+  const course = await Course.findById(id);
+
+  if (!user) {
+    return res.status(404).json({ error: "User not found" });
+  }
+
+  if (!course) {
+    return res.status(404).json({ error: "Course not found" });
+  }
+  const hasPurchased = user.purchasedCourses.includes(courseId);
+  if (hasPurchased) {
+    return res.status(200).json({ hasPurchased: true });
+  } else {
+    return res.status(200).json({ hasPurchased: false });
   }
 };
