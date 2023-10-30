@@ -2,9 +2,10 @@ import express, { Request, Response } from "express";
 import User from "../db/userSchema";
 import Course from "../db/courseSchema";
 import mongoose from "mongoose";
-const stripe = require("stripe")(
-  "sk_test_51O59p6SB2vD416D3TieBVsg9SSwLwUbdO7gcNKqOfdzj6MpnJcfOgtR01jRjsm5rvtMXOF27ufqmXgbjIeCajiyx00iiIJL3We"
-);
+import dotenv from "dotenv";
+dotenv.config();
+
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 export const makePayment = async (req: Request, res: Response) => {
   try {
