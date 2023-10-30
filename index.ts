@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import userRouter from "./routes/userRoute";
 import adminRouter from "./routes/adminRoute";
 import courseRouter from "./routes/courseRoute";
+import paymentRoute from "./routes/paymentRoute";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
@@ -42,6 +43,7 @@ mongoose
 app.use("/user", userRouter);
 app.use("/admin", adminRouter);
 app.use("/course", courseRouter);
+app.use("/payment", paymentRoute);
 
 app.listen(PORT, () => {
   console.log("Listening on port", PORT);
