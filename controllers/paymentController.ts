@@ -8,7 +8,6 @@ const stripe = require("stripe")(
 export const makePayment = async (req: Request, res: Response) => {
   try {
     const course = req.body;
-    console.log(course);
 
     const lineItems = course.map(
       (product: { title: string; price: number }) => ({
@@ -31,8 +30,36 @@ export const makePayment = async (req: Request, res: Response) => {
       cancel_url: `http://127.0.0.1:5173/feed`,
     });
 
+    const user = await User.findOne({ _id: req.userId });
+    const courseId = req.params.courseId;
+    const purchasedCourse = await Course.findById(courseId);
+    if (user && purchasedCourse) {
+      user.purchasedCourses.push(purchasedCourse._id);
+      await user.save();
+    } else {
+      res.status(400).json("user or course is invalid");
+    }
+
     res.json({ id: session.id });
   } catch (err: any) {
     res.status(403).json(err.message);
+  }
+};
+
+export const getAllPaidCourses = async (req: Request, res: Response) => {
+  try {
+    const user = await User.findOne({ _id: req.userId }).populate(
+      "purchasedCourses"
+    );
+
+    if (user) {
+      const purchasedCourses = [user.purchasedCourses];
+
+      res.status(200).json({ courses: purchasedCourses });
+    } else {
+      res.status(404).json({ message: "User not found" });
+    }
+  } catch (err) {
+    res.status(500).json({ message: "Internal server error" });
   }
 };
