@@ -55,7 +55,7 @@ export const getReview = async (req: Request, res: Response) => {
       })
     );
 
-    res.status(200).json({ reviews: reviewsWithUserNames });
+    res.status(200).json(reviewsWithUserNames);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
