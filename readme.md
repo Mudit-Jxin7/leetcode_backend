@@ -41,6 +41,7 @@ Before you start using this application, ensure you have the following installed
    MONGO_URL = "mongodb://localhost:27017/biodrop"
    PASSWORD = "YOUR_PASSWORD"
    PORT = 4000
+   STRIPE_SECRET_KEY = "YOUR_SECRET_KEY"
    ```
 
 ## Running the Application
