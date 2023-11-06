@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import dotenv from "dotenv";
 import Course from "../db/courseSchema";
+import client from "../redis/client";
 
 export const createCourse = async (req: Request, res: Response) => {
   try {
@@ -53,7 +54,20 @@ export const createCourse = async (req: Request, res: Response) => {
 
 export const getAllCourses = async (req: Request, res: Response) => {
   try {
+    const cachedValue = await client.get("Courses");
+
+    if (cachedValue) {
+      const parsedData = JSON.parse(cachedValue);
+      return res.status(201).json({
+        message: "All courses retrieved successfully",
+        courses: parsedData,
+      });
+    }
+
     const courses = await Course.find();
+
+    await client.set("Courses", JSON.stringify(courses));
+    await client.expire("Courses", 30);
 
     res.status(201).json({
       message: "All courses retrieved successfully",

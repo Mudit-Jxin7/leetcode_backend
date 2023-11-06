@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import Course from "../db/courseSchema";
 import User from "../db/userSchema";
 import mongoose from "mongoose";
+import client from "../redis/client";
 
 interface Review {
   user: mongoose.Types.ObjectId | undefined;
@@ -34,6 +35,13 @@ export const postReview = async (req: Request, res: Response) => {
 
 export const getReview = async (req: Request, res: Response) => {
   try {
+    const cachedValue = await client.get("Reviews");
+
+    if (cachedValue) {
+      const parsedData = JSON.parse(cachedValue);
+      return res.status(200).json(parsedData);
+    }
+
     const course = await Course.findById(req.params.courseId);
     if (!course) {
       return res.status(404).json({ message: "Course not found" });
@@ -54,6 +62,9 @@ export const getReview = async (req: Request, res: Response) => {
         return review;
       })
     );
+
+    await client.set("Reviews", JSON.stringify(reviewsWithUserNames));
+    await client.expire("Reviews", 30);
 
     res.status(200).json(reviewsWithUserNames);
   } catch (error) {

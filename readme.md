@@ -10,9 +10,11 @@ This repository contains a backend for course selling application built with Exp
 Before you start using this application, ensure you have the following installed on your system:
 
 - Node.js (v14 or higher)
+- Docker
 - npm (Node Package Manager)
 - MongoDB
 - Typescript
+- Redis
 
 ## Installation
 
@@ -32,6 +34,10 @@ Before you start using this application, ensure you have the following installed
 
    ```bash
    npm install
+   ```
+
+   ```bash
+      docker run -d --name redis-stack -p 6379:6379 -p 8001:8001 redis/redis-stack:latest
    ```
 
 4. Create a `.env` file based on the provided `.env.example`. You can do this by copying the `.env.example` and renaming it to `.env`. Update the values to match your configuration.
@@ -57,6 +63,7 @@ nodemon dist/index.js
 ```
 
 The application will start, and you can access it at `http://localhost:4000` (or the port you specified in your `.env` file).
+The Redis server will be listening on `http://localhost:8001/redis-stack/browser`
 
 ## API Endpoints
 
