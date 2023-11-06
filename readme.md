@@ -37,7 +37,7 @@ Before you start using this application, ensure you have the following installed
    ```
 
    ```bash
-      docker run -d --name redis-stack -p 6379:6379 -p 8001:8001 redis/redis-stack:latest
+   docker run -d --name redis-stack -p 6379:6379 -p 8001:8001 redis/redis-stack:latest
    ```
 
 4. Create a `.env` file based on the provided `.env.example`. You can do this by copying the `.env.example` and renaming it to `.env`. Update the values to match your configuration.
