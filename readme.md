@@ -80,10 +80,3 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ## Author
 
 - [Mudit Jain](https://github.com/Mudit-Jxin7)
-
-## Acknowledgments
-
-- This project was built using TypeScript, Express.js, and MongoDB.
-- Special thanks to the open-source community for their contributions and support.
-
-Feel free to customize this readme file according to your project's specific details and requirements. Good luck with your TypeScript backend application!
