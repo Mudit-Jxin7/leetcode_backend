@@ -35,14 +35,17 @@ export const postReview = async (req: Request, res: Response) => {
 
 export const getReview = async (req: Request, res: Response) => {
   try {
-    const cachedValue = await client.get("Reviews");
+    const courseId = req.params.courseId;
+    const cacheKey = `Reviews:${courseId}`;
+
+    const cachedValue = await client.get(cacheKey);
 
     if (cachedValue) {
       const parsedData = JSON.parse(cachedValue);
       return res.status(200).json(parsedData);
     }
 
-    const course = await Course.findById(req.params.courseId);
+    const course = await Course.findById(courseId);
     if (!course) {
       return res.status(404).json({ message: "Course not found" });
     }
@@ -63,8 +66,8 @@ export const getReview = async (req: Request, res: Response) => {
       })
     );
 
-    await client.set("Reviews", JSON.stringify(reviewsWithUserNames));
-    await client.expire("Reviews", 30);
+    await client.set(cacheKey, JSON.stringify(reviewsWithUserNames));
+    await client.expire(cacheKey, 30);
 
     res.status(200).json(reviewsWithUserNames);
   } catch (error) {
@@ -72,3 +75,4 @@ export const getReview = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
