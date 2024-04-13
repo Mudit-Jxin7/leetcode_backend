@@ -69,10 +69,6 @@ The Redis server will be listening on `http://localhost:8001/redis-stack/browser
 
 The application provides various API endpoints for interacting with the data stored in the MongoDB database. You can find the routes and their descriptions in the source code. Additionally, you can review the OpenAPI Specification for detailed API documentation.
 
-## Deployment
-
-This application is a starting point for your TypeScript backend. To deploy it in a production environment, you may need to configure a production-ready server, set up security measures, and manage environment variables securely. Be sure to follow best practices for deploying Node.js applications in a production environment.
-
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
